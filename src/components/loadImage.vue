@@ -26,6 +26,9 @@
   <md-button class="md-raised md-accent" @click="checkFile">Загрузить на сервер</md-button>
   </form>
   <md-progress-bar md-mode="indeterminate" v-if="sending" />
+  <md-snackbar :md-duration="messageDuration" :md-position="messagePosition" :md-active.sync="showResponse">
+      <span>{{ apiMessage }}</span>
+  </md-snackbar>
 </div>
 </template>
 
@@ -44,7 +47,11 @@ export default {
       description: null
     },
     imagefile: null,
-    sending: false
+    sending: false,
+    showResponse: false,
+    apiMessage: null,
+    messageDuration: 4000,
+    messagePosition: 'center'
   }),
   validations: {
       form: {

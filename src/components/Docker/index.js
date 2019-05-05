@@ -16,6 +16,16 @@ export default {
 				console.log(response)
 				context.sending = false
 				context.clearForm()
+
+				let { message } = response.data
+				context.showResponse = true
+				context.apiMessage = message
+			})
+			.catch((errorResponse) => {
+				context.sending = false
+				let { message } = errorResponse.response.data
+				context.apiMessage = message
+				context.showResponse = true
 			})
 	}
 }
