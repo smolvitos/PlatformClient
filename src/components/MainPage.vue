@@ -11,13 +11,13 @@
         </md-toolbar>
 
         <md-list>
-          <md-list-item @click="changeTab('dockerContainers', 'Сервисы')">
-            <md-icon>move_to_inbox</md-icon>
+          <md-list-item @click="changeTab('DockerServices', 'Сервисы')">
+            <md-icon>dashboard</md-icon>
             <span class="md-list-item-text">Контейнеры</span>
           </md-list-item>
 
-          <md-list-item @click="changeTab('loadImage', 'Загрузка образов')">
-            <md-icon>send</md-icon>
+          <md-list-item @click="changeTab('LoadImage', 'Загрузка образов')">
+            <md-icon>play_for_work</md-icon>
             <span class="md-list-item-text">Импорт</span>
           </md-list-item>
 
@@ -30,13 +30,16 @@
             <md-icon>error</md-icon>
             <span class="md-list-item-text">Spam</span>
           </md-list-item>
+
         </md-list>
       </md-app-drawer>
 
       <md-app-content>
-       <component
-        v-bind:is="currentTabComponent"
-        ></component>
+
+        <component
+          v-bind:is="currentTabComponent"
+        />
+      
       </md-app-content>
     </md-app>
   </div>
@@ -56,15 +59,15 @@
 </style>
 
 <script>
-  import loadImage from '@/components/loadImage'
-  import dockerContainers from '@/components/dockerContainers'
+  import LoadImage from '@/components/LoadImage'
+  import DockerServices from '@/components/DockerServices'
 export default {
   components: {
-    loadImage, dockerContainers
+    LoadImage, DockerServices
   },
   data: () => ({
-    currentTabComponent: null,
-    currentTabTitle: null
+    currentTabComponent: DockerServices,
+    currentTabTitle: 'Сервисы'
   }),
   methods: {
     changeTab (component, title) {
