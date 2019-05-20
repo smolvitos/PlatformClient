@@ -3,7 +3,7 @@
   <div class="md-layout">
         <DockerServicesItem
           v-for="service in services"
-          :key="service.imageName"
+          :key="service.baseImage"
           :service="service"
           @check="checkForKey"
         />
@@ -22,41 +22,32 @@
 
 <script>
 import DockerServicesItem from '@/components/DockerServicesItem'
+import Docker from '@/components/Docker'
+import Authentication from '@/components/Authentication'
+
 export default {
   components: {
     DockerServicesItem
   },
+
   data: () => ({
-    services: [
-      {
-        imageName: 'linode/lamp',
-        name: 'Apache PHP server',
-        description: 'Default LAMP server. Just try it!'
-      },
-      {
-        imageName: 'nginx',
-        name: 'nginx server',
-        description: 'Server for static files. Maybe it is vulnerable??'
-      },
-      {
-        imageName: 'ubuntu',
-        name: 'Bash CRLF',
-        description: 'Try to hack bourne again shell!'
-      },
-      {
-        imageName: 'nodejs',
-        name: 'Node.js server',
-        description: 'Node.js server with insecure file upload'
-      }
-    ],
-    vertical: "left",
-    horizontal: "left"
+    services: []
   }),
+
+  beforeMount () {
+    Docker.getServices(document.cookie)
+    .then((services) => {
+      console.log(services.data)
+      this.services = services.data
+    })
+  },
+
   methods: {
     checkForKey (imageName) {
       alert(imageName)
     }
   },
+
   name: 'DockerServices'
 }
 </script>

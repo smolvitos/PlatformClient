@@ -1,17 +1,12 @@
 import router from '@/router'
 import Axios from 'axios'
+import getApi from '@/services/getApi'
 
 export default {
 	loadDockerImage(context, dockerImage, token) {
-		let axios = Axios.create({
-			baseURL: 'http://192.168.1.3:8081',
-			headers: {
-        		'Authorization': token,
-        		'Content-type': 'multipart/form-data'
-    		}
-		})
+		let api = getApi(token, true) // true для установки multipart/form-data
 		context.sending = true
-		axios.post('/load', dockerImage)
+		api.post('/load', dockerImage)
 			.then((response) => {
 				console.log(response)
 				context.sending = false
@@ -27,5 +22,10 @@ export default {
 				context.apiMessage = message
 				context.showResponse = true
 			})
+	},
+
+	getServices(token) {
+		let api = getApi(token)
+		return api.get('/api/v1/services/list')
 	}
 }

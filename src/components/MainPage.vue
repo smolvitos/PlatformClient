@@ -13,7 +13,7 @@
         <md-list>
           <md-list-item @click="changeTab('DockerServices', 'Сервисы')">
             <md-icon>dashboard</md-icon>
-            <span class="md-list-item-text">Контейнеры</span>
+            <span class="md-list-item-text">Сервисы</span>
           </md-list-item>
 
           <md-list-item @click="changeTab('LoadImage', 'Загрузка образов')">

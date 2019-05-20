@@ -5,6 +5,7 @@ import Register from '@/components/Authentication/Register'
 import Login from '@/components/Authentication/Login'
 import MainPage from '@/components/MainPage'
 import Auth from '@/components/Authentication'
+import DockerServices from '@/components/DockerServices'
 
 Vue.use(Router)
 
@@ -44,24 +45,13 @@ const router = new Router({
       name: 'MainPage',
       component: MainPage,
       beforeEnter: checks.isLoggedIn()
+    },
+    {
+      path: '/abc',
+      name: 'DockerServices',
+      component: DockerServices,
     }
   ]
 })
-
-/*router.beforeEach((to, from, next) => {
-  if (false) {
-    // этот путь требует авторизации, проверяем залогинен ли
-    // пользователь, и если нет, перенаправляем на страницу логина
-    if (true) {
-      next({
-        path: '/login',
-      })
-    } else {
-      next()
-    }
-  } else {
-    next() // всегда так или иначе нужно вызвать next()!
-  }
-})*/
 
 export default router

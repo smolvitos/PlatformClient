@@ -91,15 +91,7 @@
           }
 
           Authentication.authenticate(this, user, '/main')
-          /*let response = await appService.login(this, user, '/')
-          setTimeout(() => {
-              if (response) {
-                this.userSaved = true
-                this.sending = false
-                this.authMessage = `Здравствуйте, ${this.form.username}!`
-                this.clearForm()
-              }
-          }, 1500)*/
+          
       },
       validateAuthorizeUser () {
         this.$v.$touch()

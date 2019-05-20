@@ -163,19 +163,6 @@
           gender: this.form.gender
         }
         
-        /*const response = await appService.register(user)
-
-        setTimeout(() => { 
-          if (response.data.status == 'success') {
-          this.message = response.data.message
-          this.userSaved = true
-          this.sending = false
-          this.clearForm()
-          setTimeout(() => {
-            this.$router.push('login')
-          }, 10000)
-        }
-        }, 1500)*/
         Authentication.register(this, user, '/login')
         
       },

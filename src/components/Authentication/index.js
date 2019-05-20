@@ -1,5 +1,4 @@
-import router from '@/router'
-import api from '@/services/api'
+import getApi from '@/services/getApi'
 
 export default {
 	user: {
@@ -7,13 +6,14 @@ export default {
 	},
 
 	authenticate(context, loginData, redirect) {
-		api().post('/login', loginData)
+		//console.log(context.$cookie)
+		let api = getApi()
+		api.post('/login', loginData)
 			.then((response) => {
 				console.log(response)
 				let { token } = response.data
 				context.$cookie.set('token', token, 1)
 				this.user.authenticated = true
-				//console.log(this.user.authenticated)
 				context.sending = true
 				setTimeout(() => {
 					if (redirect) {
@@ -34,7 +34,8 @@ export default {
 	},
 
 	register(context, regesterData, redirect) {
-		api().post('/register', regesterData)
+		let api = getApi()
+		api.post('/register', regesterData)
 			.then((response) => {
 				console.log(response)
 				let { message } = response.data
@@ -83,6 +84,7 @@ export default {
   	},
 
 	getSecret() {
-		return api().get('/')
+		let api = getApi()
+		return api.get('/')
 	}
 }

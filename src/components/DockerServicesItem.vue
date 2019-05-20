@@ -1,22 +1,31 @@
 <template>
 
-<div class="md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+<div class="md-layout-item">
 
     <md-card class="md-primary">
       <md-ripple>
         <md-card-header>
-          <div class="md-title">{{ service.imageName }}</div>
-          <div class="md-subhead">{{ service.name }}</div>
+          <div class="md-title">{{ service.baseImage }}</div> <!-- Поменять местами-->
+          <div class="md-subhead">{{ service.serviceName }}</div>
         </md-card-header>
 
         <md-card-content>
-          {{ service.description }}
+          {{ service.serviceDescription }}
         </md-card-content>
 
-        <md-card-actions>
-          <md-button @click="$emit('check', service.imageName)">Запуск</md-button>
-          <md-button>Пауза</md-button>
-          <md-button>Стоп</md-button>
+        <md-card-actions class="md-alignment-left-left">
+          <md-button @click="$emit('check', service.baseImage)">
+            <md-icon>play_arrow</md-icon>
+          </md-button>
+          <md-button @click="$emit('check', service.baseImage)">
+            <md-icon>pause</md-icon>
+          </md-button>
+          <md-button @click="$emit('check', service.baseImage)">
+            <md-icon>stop</md-icon>
+          </md-button>
+          <md-button @click="$emit('check', service.baseImage)">
+            <md-icon>delete</md-icon>
+          </md-button>
         </md-card-actions>
       </md-ripple>
     </md-card>
