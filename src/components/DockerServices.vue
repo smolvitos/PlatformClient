@@ -11,15 +11,6 @@
   
 </template>
 
-<style lang="scss" scoped>
-  .md-card {
-    width: 320px;
-    margin: 4px;
-    display: inline-block;
-    vertical-align: top;
-  }
-</style>
-
 <script>
 import DockerServicesItem from '@/components/DockerServicesItem'
 import Docker from '@/components/Docker'

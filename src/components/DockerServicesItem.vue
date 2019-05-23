@@ -1,7 +1,5 @@
 <template>
 
-<div class="md-layout-item">
-
     <md-card class="md-primary">
       <md-ripple>
         <md-card-header>
@@ -30,9 +28,16 @@
       </md-ripple>
     </md-card>
 
-  </div>
-
 </template>
+
+<style lang="scss" scoped>
+  .md-card {
+    width: 400px;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+  }
+</style>
 
 <script>
 export default {

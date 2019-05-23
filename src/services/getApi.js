@@ -9,7 +9,7 @@ export default (token, isMultipart) => {
 		}
 	}
 	return axios.create({
-		baseURL: 'http://192.168.1.3:8081',
+		baseURL: 'http://127.0.0.1:8081',
 		headers
 	})
 }
