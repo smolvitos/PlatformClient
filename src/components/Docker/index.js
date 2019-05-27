@@ -24,8 +24,28 @@ export default {
 			})
 	},
 
-	getServices(token) {
+	listServices(token) {
 		let api = getApi(token)
 		return api.get('/api/v1/services/list')
-	}
+	},
+
+    startService(token, service) {
+        let api = getApi(token)
+        return api.post('/api/v1/services/start', service)
+    },
+
+    pauseService(token, service) {
+        let api = getApi(token)
+        return api.post('/api/v1/services/pause', service)
+    },
+
+    stopService(token, service) {
+        let api = getApi(token)
+        return api.post('/api/v1/services/stop', service)
+    },
+
+    deleteService(token, service) {
+        let api = getApi(token)
+        return api.post('/api/v1/services/delete', service)
+    },
 }
