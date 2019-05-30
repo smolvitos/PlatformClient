@@ -2,7 +2,7 @@
 
   <div class="md-layout">
         <DockerServicesItem
-          v-for="service in services"
+          v-for="(service, index) in services"
           :key="service.baseImage"
           :service="service"
           @start="startService"
@@ -38,14 +38,17 @@ export default {
     },
 
     listServices() {
-        Docker.listServices(document.cookie)
-        .then((services) => {
-            console.log(services.data)
-            this.services = services.data
+        return Docker.emptyRequest()
+        .then(() => {
+            return Docker.listServices(document.cookie)
+            .then((services) => {
+                this.services = services.data
+            })
         })
     },
 
-    startService(baseImage, containerName, state) {
+    startService(baseImage, containerName, state, context) {
+        console.log(context)
         let service = {
             baseImage,
             containerName,
@@ -108,7 +111,16 @@ export default {
             console.log(response.data)
         })
         .then(() => {
-            setTimeout(this.listServices, 1500)
+            this.listServices()
+            .then(() => {
+                this.services = this.services.filter((service, index) => {
+                    console.log('look at me')
+                    console.log(this.services)
+                    if (!~service.baseImage.indeOf(baseImage)) {
+                        return service
+                    }
+                })
+            })
         })
         .catch((errorResponse) => {
             alert(errorResponse.response.data)
