@@ -12,21 +12,22 @@
         </md-card-content>
 
         <md-card-actions>
-          <md-button @click="$emit('start', service.baseImage, service.containerName, service.state)" :disabled=buttonController.start>
+          <md-button @click="startService" :disabled=buttonController.start> <!--$emit('start', service.baseImage, service.containerName, service.state)-->
             <md-icon>play_arrow</md-icon>
           </md-button>
-          <md-button @click="$emit('pause', service.containerName, service.state)" :disabled=buttonController.pause>
+          <md-button @click="pauseService" :disabled=buttonController.pause> <!--//$emit('pause', service.containerName, service.state)-->
             <md-icon>pause</md-icon>
           </md-button>
-          <md-button @click="$emit('stop', service.containerName, service.state)" :disabled=buttonController.stop>
+          <md-button @click="stopService" :disabled=buttonController.stop> <!--//$emit('stop', service.containerName, service.state)-->
             <md-icon>stop</md-icon>
           </md-button>
-          <md-button @click="$emit('delete', service.baseImage, service.containerName, service.state)" :disabled=buttonController.delete>
+          <md-button @click="deleteService" :disabled=buttonController.delete> <!--//$emit('delete', service.baseImage, service.containerName, service.state)-->
             <md-icon>delete</md-icon>
           </md-button>
         </md-card-actions>
+        <md-progress-bar md-mode="indeterminate" v-show="changing" />
       </md-ripple>
-      <md-progress-bar md-mode="indeterminate" v-if="changing" />
+      <md-snackbar :md-active.sync="showMessage" md-duration="2000">{{ serverMessage }}</md-snackbar>
     </md-card>
 
 </template>
@@ -54,12 +55,14 @@
   @import "~vue-material/dist/components/MdCard/theme";
 
   .md-card {
-    margin: 4px;
-    display: inline-block;
+      margin: 5px;
   }
+
 </style>
 
 <script>
+import Docker from '@/components/Docker'
+
 export default {
   name: 'DockerServicesItem',
   props: {
@@ -69,7 +72,9 @@ export default {
     }
   },
   data: () => ({
-      changing: false
+      changing: false,
+      showMessage: false,
+      serverMessage: null
   }),
 
   computed: {
@@ -86,6 +91,108 @@ export default {
             stop: (this.service.containerName) ? false : true,
             delete: false
         }
+    }
+  },
+
+  methods: {
+    startService() { 
+        let baseImage = this.service.baseImage
+        let containerName = this.service.containerName
+        let state = this.service.state  
+        let serviceItem = {
+                baseImage,
+                containerName,
+                state
+        }
+        this.changing = true
+        Docker.startService('', serviceItem)
+        .then((response) => {
+            console.log(response.data)
+            this.serverMessage = response.data.status
+        })
+        .then(() => {
+            setTimeout(() => {
+                this.showMessage = true
+                this.changing = false
+                this.$emit('listServices')
+            }, 2000)
+        })
+        .catch((errorResponse) => {
+            this.changing = false
+            alert(errorResponse.response.data)
+        })
+    },
+
+    pauseService(containerName, state) {
+        let service = {
+            containerName: this.service.containerName,
+            state: this.service.state
+        }
+        this.changing = true
+        Docker.pauseService('', service)
+        .then((response) => {
+            console.log(response.data)
+            this.serverMessage = response.data.status
+        })
+        .then(() => {
+            setTimeout(() => {
+                this.showMessage = true
+                this.changing = false
+                this.$emit('listServices')
+            }, 2000)
+        })
+        .catch((errorResponse) => {
+            this.changing = false
+            alert(errorResponse.response.data)
+        })
+    },
+
+    stopService(containerName, state) {
+         let service = {
+            containerName: this.service.containerName,
+            state: this.service.state
+        }
+        this.changing = true
+        Docker.stopService('', service)
+        .then((response) => {
+            console.log(response.data)
+            this.serverMessage = response.data.status
+        })
+        .then(() => {
+            setTimeout(() => {
+                this.showMessage = true
+                this.$emit('listServices')
+                this.changing = false
+            }, 2000)
+        })
+        .catch((errorResponse) => {
+            this.changing = false
+            alert(errorResponse.response.data)
+        })
+    },
+
+    deleteService(baseImage, containerName, state) {
+         let service = {
+            baseImage: this.service.baseImage,
+            containerName: this.service.containerName,
+            state: this.service.state
+        }
+        this.changing = true
+        Docker.deleteService('', service)
+        .then((response) => {
+            console.log(response.data)
+            this.serverMessage = response.data.status
+        })
+        .then(() => {
+            setTimeout(() => {
+                this.showMessage = true
+                this.changing = false
+                this.$emit('listServices')
+            }, 2000)
+        })
+        .catch((error) => {
+            alert(error)
+        })
     }
   }
 }
