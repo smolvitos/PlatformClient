@@ -1,34 +1,53 @@
 <template>
+    <div>
+        <md-card :class="cardColor">
+            <md-card-header>
+            <md-button :md-ripple="false" @click="showDialog = true">{{ service.serviceName }}</md-button> <!-- Поменять местами-->
+            <div class="md-subhead">{{ service.baseImage }}</div>
+            </md-card-header>
 
-    <md-card :class="cardColor">
-      <md-ripple>
-        <md-card-header>
-          <div class="md-title">{{ service.baseImage }}</div> <!-- Поменять местами-->
-          <div class="md-subhead">{{ service.serviceName }}</div>
-        </md-card-header>
+            <md-card-content>
+            {{ service.serviceShortDescription }}
+            </md-card-content>
 
-        <md-card-content>
-          {{ service.serviceDescription }}
-        </md-card-content>
+            <md-card-actions>
+            <md-button @click="startService" :disabled=buttonController.start> <!--$emit('start', service.baseImage, service.containerName, service.state)-->
+                <md-icon>play_arrow</md-icon>
+            </md-button>
+            <md-button @click="pauseService" :disabled=buttonController.pause> <!--//$emit('pause', service.containerName, service.state)-->
+                <md-icon>pause</md-icon>
+            </md-button>
+            <md-button @click="stopService" :disabled=buttonController.stop> <!--//$emit('stop', service.containerName, service.state)-->
+                <md-icon>stop</md-icon>
+            </md-button>
+            <md-button @click="deleteService" :disabled=buttonController.delete> <!--//$emit('delete', service.baseImage, service.containerName, service.state)-->
+                <md-icon>delete</md-icon>
+            </md-button>
+            </md-card-actions>
+            <md-progress-bar md-mode="indeterminate" v-show="changing" />
+        <md-snackbar :md-active.sync="showMessage" md-duration="2000">{{ serverMessage }}</md-snackbar>
+        </md-card>
+        <md-dialog :md-active.sync="showDialog">
+            <md-dialog-title>{{ service.serviceName }} (основан на {{ service.baseImage }})</md-dialog-title>
+            <md-dialog-content>
+                <span class="md-caption">Краткое описание</span>
+                <span class="md-body-1">{{ service.serviceShortDescription }}</span>
 
-        <md-card-actions>
-          <md-button @click="startService" :disabled=buttonController.start> <!--$emit('start', service.baseImage, service.containerName, service.state)-->
-            <md-icon>play_arrow</md-icon>
-          </md-button>
-          <md-button @click="pauseService" :disabled=buttonController.pause> <!--//$emit('pause', service.containerName, service.state)-->
-            <md-icon>pause</md-icon>
-          </md-button>
-          <md-button @click="stopService" :disabled=buttonController.stop> <!--//$emit('stop', service.containerName, service.state)-->
-            <md-icon>stop</md-icon>
-          </md-button>
-          <md-button @click="deleteService" :disabled=buttonController.delete> <!--//$emit('delete', service.baseImage, service.containerName, service.state)-->
-            <md-icon>delete</md-icon>
-          </md-button>
-        </md-card-actions>
-        <md-progress-bar md-mode="indeterminate" v-show="changing" />
-      </md-ripple>
-      <md-snackbar :md-active.sync="showMessage" md-duration="2000">{{ serverMessage }}</md-snackbar>
-    </md-card>
+                <span class="md-caption">Полное описание</span>
+                <span class="md-body-1">{{ service.serviceDescription }}</span>
+
+                <span class="md-caption">Доступ</span>
+                <span class="md-body-1">{{ service.ports }}</span>
+            </md-dialog-content>
+
+            <md-dialog-actions>
+                <md-button class="md-primary" @click="showDialog = false">Закрыть</md-button>
+            </md-dialog-actions>
+        </md-dialog>
+
+        <!-- <md-button class="md-primary md-raised" @click="showDialog = true">Show Dialog</md-button> -->
+    </div>
+</template>
 
 </template>
 
@@ -56,8 +75,16 @@
 
   .md-card {
       margin: 5px;
+      max-width: 400px;
+  }
+  
+  .md-dialog {
+    max-width: 768px;
   }
 
+  span {
+      display: block;
+    }
 </style>
 
 <script>
@@ -74,7 +101,8 @@ export default {
   data: () => ({
       changing: false,
       showMessage: false,
-      serverMessage: null
+      serverMessage: null,
+      showDialog: false
   }),
 
   computed: {

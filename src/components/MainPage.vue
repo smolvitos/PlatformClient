@@ -21,16 +21,6 @@
             <span class="md-list-item-text">Импорт</span>
           </md-list-item>
 
-          <md-list-item>
-            <md-icon>delete</md-icon>
-            <span class="md-list-item-text">Trash</span>
-          </md-list-item>
-
-          <md-list-item>
-            <md-icon>error</md-icon>
-            <span class="md-list-item-text">Spam</span>
-          </md-list-item>
-
         </md-list>
       </md-app-drawer>
 
@@ -49,6 +39,7 @@
   .md-app {
     max-height: 900px;
     border: 1px solid rgba(#000, .12);
+    height: 100%;
   }
 
    // Demo purposes only

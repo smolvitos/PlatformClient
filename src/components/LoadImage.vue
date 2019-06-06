@@ -1,11 +1,18 @@
 <template>
-<div>
-  <form class="md-layout md-alignment-center-center" id="uploadForm" name="uploadForm" enctype="multipart/form-data">
+<md-tabs md-centered>
+	  <md-tab md-label="Сервис" md-icon="view_quilt">
+		<form class="md-layout md-alignment-center-center" id="uploadForm" name="uploadForm" enctype="multipart/form-data">
 
           <md-field :class="getValidationClass('servicename')">
             <label for="servicename">Название сервиса</label>
             <md-input type="text" name="servicename" id="servicename" autocomplete="servicename" v-model="form.servicename" :disabled="sending" />
             <span class="md-error" v-if="!$v.form.servicename.required">Укажите название сервиса</span>
+          </md-field>
+
+          <md-field :class="getValidationClass('shortdescription')">
+            <label for="shortdescription">Краткое описание сервиса</label>
+            <md-textarea type="text" name="shortdescription" id="shortdescription" autocomplete="shortdescription" v-model="form.shortdescription" :disabled="sending" />
+            <span class="md-error" v-if="!($v.form.shortdescription.required && $v.form.shortdescription.maxLength)">Укажите краткое описание сервиса (не более 100 символов)</span>
           </md-field>
 
           <md-field :class="getValidationClass('description')">
@@ -29,14 +36,22 @@
   <md-snackbar :md-duration="messageDuration" :md-position="messagePosition" :md-active.sync="showResponse">
       <span>{{ apiMessage }}</span>
   </md-snackbar>
-</div>
+	  </md-tab>
+
+	  <md-tab md-label="Виртуальная машина" md-icon="computer">
+		 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolorum quas amet cum vitae, omnis! Illum quas voluptatem, expedita iste, dicta ipsum ea veniam dolore in, quod saepe reiciendis nihil.</p>
+		 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolorum quas amet cum vitae, omnis! Illum quas voluptatem, expedita iste, dicta ipsum ea veniam dolore in, quod saepe reiciendis nihil.</p>
+	  </md-tab>
+
+</md-tabs>
+  
 </template>
 
 <script>
   import Docker from '@/components/Docker'
   import Authentication from '@/components/Authentication'
   import { validationMixin } from 'vuelidate'
-  import { required } from 'vuelidate/lib/validators'
+  import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'loadImage',
@@ -44,7 +59,8 @@ export default {
   data: () => ({
     form: {
       servicename: null,
-      description: null
+      description: null,
+      shortdescription: null
     },
     imagefile: null,
     sending: false,
@@ -60,6 +76,10 @@ export default {
         },
         description: {
           required
+        },
+        shortdescription: {
+            required,
+            maxLength: maxLength(100)
         }
       },
       imagefile: {
@@ -85,6 +105,7 @@ export default {
         this.$v.$reset()
         this.form.servicename = null
         this.form.description = null
+        this.form.shortdescription = null
         this.imagefile = null
     },
     checkFile () {
