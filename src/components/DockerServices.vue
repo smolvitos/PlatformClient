@@ -45,9 +45,11 @@ export default {
     },
 
     listServices() {
+        //console.log(Authentication.getAuthenticationHeader(this))
         return Docker.emptyRequest()
         .then(() => {
-            return Docker.listServices(document.cookie)
+            console.log(Authentication.getAuthenticationHeader(this))
+            return Docker.listServices(Authentication.getAuthenticationHeader(this))
             .then((services) => {
                 this.services = services.data
             })

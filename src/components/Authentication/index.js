@@ -83,6 +83,12 @@ export default {
     	return `Bearer ${context.$cookie.get('token')}`
   	},
 
+    logout (context) {
+        context.$cookie.delete('token')
+        this.user.authenticated = false
+        window.location = window.location.origin
+    },
+
 	getSecret() {
 		let api = getApi()
 		return api.get('/')

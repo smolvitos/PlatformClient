@@ -21,6 +21,11 @@
             <span class="md-list-item-text">Импорт</span>
           </md-list-item>
 
+          <md-list-item @click="logout">
+            <md-icon>logout</md-icon>
+            <span class="md-list-item-text">Выход</span>
+          </md-list-item>
+
         </md-list>
       </md-app-drawer>
 
@@ -52,6 +57,7 @@
 <script>
   import LoadImage from '@/components/LoadImage'
   import DockerServices from '@/components/DockerServices'
+  import Authentication from '@/components/Authentication'
 export default {
   components: {
     LoadImage, DockerServices
@@ -64,6 +70,10 @@ export default {
     changeTab (component, title) {
       this.currentTabComponent = component
       this.currentTabTitle = title
+    },
+
+    logout () {
+        Authentication.logout(this)
     }
   },
   name: 'MainPage'

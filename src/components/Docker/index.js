@@ -25,7 +25,7 @@ export default {
 	},
 
 	listServices(token) {
-		let api = getApi(token)
+		let api = getApi(token, false)
 		return api.get('/api/v1/services/list')
 	},
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-card :class="cardColor">
+        <md-card :class="cardColor" md-theme="custom-card" md-with-hover>
             <md-card-header>
             <md-button :md-ripple="false" @click="showDialog = true">{{ service.serviceName }}</md-button> <!-- Поменять местами-->
             <div class="md-subhead">{{ service.baseImage }}</div>
@@ -24,9 +24,9 @@
                 <md-icon>delete</md-icon>
             </md-button>
             </md-card-actions>
-            <md-progress-bar md-mode="indeterminate" v-show="changing" />
-        <md-snackbar :md-active.sync="showMessage" md-duration="2000">{{ serverMessage }}</md-snackbar>
+            
         </md-card>
+        <md-progress-bar md-mode="indeterminate" v-show="changing" />
         <md-dialog :md-active.sync="showDialog">
             <md-dialog-title>{{ service.serviceName }} (основан на {{ service.baseImage }})</md-dialog-title>
             <md-dialog-content>
@@ -54,20 +54,10 @@
 <style lang="scss" scoped>
   @import "~vue-material/dist/theme/engine";
 
-  @include md-register-theme("green-card", (
-    primary: md-get-palette-color(green, 500)
-  ));
-
-  @include md-register-theme("black-card", (
-    primary: md-get-palette-color(black, 500)
-  ));
-
-  @include md-register-theme("purple-card", (
-    primary: md-get-palette-color(purple, 500)
-  ));
-
-  @include md-register-theme("orange-card", (
-    primary: md-get-palette-color(orange, 500)
+  @include md-register-theme("custom-card", (
+    primary: md-get-palette-color(green, 500),
+    accent: md-get-palette-color(orange, 500),
+    theme: dark
   ));
 
   @import "~vue-material/dist/base/theme";
@@ -139,11 +129,9 @@ export default {
             this.serverMessage = response.data.status
         })
         .then(() => {
-            setTimeout(() => {
-                this.showMessage = true
-                this.changing = false
-                this.$emit('listServices')
-            }, 2000)
+            this.showMessage = true
+            this.changing = false
+            this.$emit('listServices')
         })
         .catch((errorResponse) => {
             this.changing = false
@@ -163,11 +151,9 @@ export default {
             this.serverMessage = response.data.status
         })
         .then(() => {
-            setTimeout(() => {
-                this.showMessage = true
-                this.changing = false
-                this.$emit('listServices')
-            }, 2000)
+            this.showMessage = true
+            this.changing = false
+            this.$emit('listServices')
         })
         .catch((errorResponse) => {
             this.changing = false
@@ -187,11 +173,9 @@ export default {
             this.serverMessage = response.data.status
         })
         .then(() => {
-            setTimeout(() => {
-                this.showMessage = true
-                this.$emit('listServices')
-                this.changing = false
-            }, 2000)
+            this.showMessage = true
+            this.$emit('listServices')
+            this.changing = false
         })
         .catch((errorResponse) => {
             this.changing = false
@@ -212,11 +196,9 @@ export default {
             this.serverMessage = response.data.status
         })
         .then(() => {
-            setTimeout(() => {
-                this.showMessage = true
-                this.changing = false
-                this.$emit('listServices')
-            }, 2000)
+            this.showMessage = true
+            this.changing = false
+            this.$emit('listServices')
         })
         .catch((error) => {
             alert(error)
