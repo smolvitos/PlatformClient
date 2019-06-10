@@ -79,9 +79,10 @@
 
 <script>
 import Docker from '@/components/Docker'
+import Authentication from '@/components/Authentication'
 
 export default {
-  name: 'DockerServicesItem',
+  name: 'DockerServicesItemUser',
   props: {
     service: {
       type: Object,
@@ -123,19 +124,17 @@ export default {
                 state
         }
         this.changing = true
-        Docker.startService('', serviceItem)
+        Docker.startService(Authentication.getAuthenticationHeader(this), serviceItem)
         .then((response) => {
             console.log(response.data)
             this.serverMessage = response.data.status
-        })
-        .then(() => {
             this.showMessage = true
             this.changing = false
             this.$emit('listServices')
         })
         .catch((errorResponse) => {
             this.changing = false
-            alert(errorResponse.response.data)
+            alert(errorResponse.response.data.message)
         })
     },
 
@@ -145,19 +144,17 @@ export default {
             state: this.service.state
         }
         this.changing = true
-        Docker.pauseService('', service)
+        Docker.pauseService(Authentication.getAuthenticationHeader(this), service)
         .then((response) => {
             console.log(response.data)
             this.serverMessage = response.data.status
-        })
-        .then(() => {
             this.showMessage = true
             this.changing = false
             this.$emit('listServices')
         })
         .catch((errorResponse) => {
             this.changing = false
-            alert(errorResponse.response.data)
+            alert(errorResponse.response.data.message)
         })
     },
 
@@ -167,19 +164,17 @@ export default {
             state: this.service.state
         }
         this.changing = true
-        Docker.stopService('', service)
+        Docker.stopService(Authentication.getAuthenticationHeader(this), service)
         .then((response) => {
             console.log(response.data)
             this.serverMessage = response.data.status
-        })
-        .then(() => {
             this.showMessage = true
-            this.$emit('listServices')
             this.changing = false
+            this.$emit('listServices')
         })
         .catch((errorResponse) => {
             this.changing = false
-            alert(errorResponse.response.data)
+            alert(errorResponse.response.data.message)
         })
     },
 
@@ -190,18 +185,17 @@ export default {
             state: this.service.state
         }
         this.changing = true
-        Docker.deleteService('', service)
+        Docker.deleteService(Authentication.getAuthenticationHeader(this), service)
         .then((response) => {
             console.log(response.data)
             this.serverMessage = response.data.status
-        })
-        .then(() => {
             this.showMessage = true
             this.changing = false
             this.$emit('listServices')
         })
-        .catch((error) => {
-            alert(error)
+        .catch((errorResponse) => {
+            this.changing = false
+            alert(errorResponse.response.data.message)
         })
     }
   }

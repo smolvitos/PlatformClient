@@ -11,7 +11,7 @@
         </md-toolbar>
 
         <md-list>
-          <md-list-item @click="changeTab('DockerServices', 'Сервисы')">
+          <md-list-item @click="changeTab('DockerServicesAdmin', 'Сервисы')">
             <md-icon>dashboard</md-icon>
             <span class="md-list-item-text">Сервисы</span>
           </md-list-item>
@@ -55,15 +55,15 @@
 </style>
 
 <script>
-  import LoadImage from '@/components/LoadImage'
-  import DockerServices from '@/components/DockerServices'
+  import LoadImage from '@/components/Docker/Admin/LoadImage'
+  import DockerServicesAdmin from '@/components/Docker/Admin/DockerServices'
   import Authentication from '@/components/Authentication'
 export default {
   components: {
-    LoadImage, DockerServices
+    LoadImage, DockerServicesAdmin
   },
   data: () => ({
-    currentTabComponent: DockerServices,
+    currentTabComponent: DockerServicesAdmin,
     currentTabTitle: 'Сервисы'
   }),
   methods: {
@@ -76,6 +76,6 @@ export default {
         Authentication.logout(this)
     }
   },
-  name: 'MainPage'
+  name: 'MainPageAdmin'
 }
 </script>

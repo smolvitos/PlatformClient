@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import StartPage from '@/components/StartPage'
 import Register from '@/components/Authentication/Register'
 import Login from '@/components/Authentication/Login'
-import MainPage from '@/components/MainPage'
+import MainPageAdmin from '@/components/Docker/Admin/MainPage'
+import MainPageUser from '@/components/Docker/User/MainPage'
 import Auth from '@/components/Authentication'
-import DockerServices from '@/components/DockerServices'
+import DockerServicesAdmin from '@/components/Docker/Admin/DockerServices'
 
 Vue.use(Router)
 
@@ -26,8 +27,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'StartPage',
+      component: StartPage
     },
     {
       path: '/register',
@@ -42,14 +43,14 @@ const router = new Router({
     },
     {
       path: '/main',
-      name: 'MainPage',
-      component: MainPage,
-      beforeEnter: checks.isLoggedIn()
+      name: 'MainPageAdmin',
+      component: Auth.user.isAdmin ? MainPageAdmin : MainPageUser,
+      //beforeEnter: checks.isLoggedIn()
     },
     {
       path: '/abc',
-      name: 'DockerServices',
-      component: DockerServices,
+      name: 'DockerServicesAdmin',
+      component: DockerServicesAdmin,
     }
   ]
 })

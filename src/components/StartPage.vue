@@ -18,7 +18,7 @@
 <script>
 import Footer from '@/components/Footer'
 export default {
-  name: 'HelloWorld',
+  name: 'StartPage',
   components: { Footer },
   data () {
     return {

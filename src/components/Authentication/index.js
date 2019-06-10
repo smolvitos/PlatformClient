@@ -2,7 +2,8 @@ import getApi from '@/services/getApi'
 
 export default {
 	user: {
-		authenticated: false
+		authenticated: false,
+        isAdmin: false
 	},
 
 	authenticate(context, loginData, redirect) {
@@ -11,9 +12,11 @@ export default {
 		api.post('/login', loginData)
 			.then((response) => {
 				console.log(response)
-				let { token } = response.data
+				let { token, isAdmin } = response.data
 				context.$cookie.set('token', token, 1)
+                context.$cookie.set('isAdmin', isAdmin, 1)
 				this.user.authenticated = true
+                this.user.isAdmin = isAdmin
 				context.sending = true
 				setTimeout(() => {
 					if (redirect) {
@@ -76,7 +79,7 @@ export default {
 
 		if (token) this.user.authenticated = true
 		else this.user.authenticated = false
-		console.log(this.user.authenticated)
+
 	},
 
 	getAuthenticationHeader (context) {

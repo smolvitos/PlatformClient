@@ -1,7 +1,7 @@
 <template>
 
   <div class="md-layout" id="services">
-        <DockerServicesItem
+        <DockerServicesItemAdmin
           v-for="(service, index) in services"
           :key="service.baseImage"
           :service="service"
@@ -22,13 +22,13 @@
 </style>
 
 <script>
-import DockerServicesItem from '@/components/DockerServicesItem'
+import DockerServicesItemAdmin from '@/components/Docker/Admin/DockerServicesItem'
 import Docker from '@/components/Docker'
 import Authentication from '@/components/Authentication'
 
 export default {
   components: {
-    DockerServicesItem
+    DockerServicesItemAdmin
   },
 
   data: () => ({
@@ -45,18 +45,17 @@ export default {
     },
 
     listServices() {
-        //console.log(Authentication.getAuthenticationHeader(this))
-        return Docker.emptyRequest()
+        let token = Authentication.getAuthenticationHeader(this)
+        Docker.emptyRequest(token)
         .then(() => {
-            console.log(Authentication.getAuthenticationHeader(this))
-            return Docker.listServices(Authentication.getAuthenticationHeader(this))
-            .then((services) => {
-                this.services = services.data
-            })
+            return Docker.listServices(token)
+        })
+        .then((services) => {
+            this.services = services.data
         })
     }
   },
 
-  name: 'DockerServices'
+  name: 'DockerServicesAdmin'
 }
 </script>

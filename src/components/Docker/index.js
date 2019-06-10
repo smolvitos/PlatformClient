@@ -49,8 +49,8 @@ export default {
         return api.post('/api/v1/services/delete', service)
     },
 
-    emptyRequest() {
-        let api = getApi()
+    emptyRequest(token) {
+        let api = getApi(token)
         return api.get('/api/v1/services/list')
     }
 }
