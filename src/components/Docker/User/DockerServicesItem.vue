@@ -2,7 +2,7 @@
     <div>
         <md-card :class="cardColor" md-theme="custom-card" md-with-hover>
             <md-card-header>
-            <md-button :md-ripple="false" @click="showDialog = true">{{ service.serviceName }}</md-button> <!-- Поменять местами-->
+            <md-button :md-ripple="false" @click="showDialog = true">Имя</md-button> <!-- Поменять местами-->
             <div class="md-subhead">{{ service.baseImage }}</div>
             </md-card-header>
 
@@ -11,18 +11,6 @@
             </md-card-content>
 
             <md-card-actions>
-            <md-button @click="startService" :disabled=buttonController.start> <!--$emit('start', service.baseImage, service.containerName, service.state)-->
-                <md-icon>play_arrow</md-icon>
-            </md-button>
-            <md-button @click="pauseService" :disabled=buttonController.pause> <!--//$emit('pause', service.containerName, service.state)-->
-                <md-icon>pause</md-icon>
-            </md-button>
-            <md-button @click="stopService" :disabled=buttonController.stop> <!--//$emit('stop', service.containerName, service.state)-->
-                <md-icon>stop</md-icon>
-            </md-button>
-            <md-button @click="deleteService" :disabled=buttonController.delete> <!--//$emit('delete', service.baseImage, service.containerName, service.state)-->
-                <md-icon>delete</md-icon>
-            </md-button>
             </md-card-actions>
             
         </md-card>
@@ -66,6 +54,7 @@
   .md-card {
       margin: 5px;
       max-width: 400px;
+      min-width: 200px;
   }
   
   .md-dialog {

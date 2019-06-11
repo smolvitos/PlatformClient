@@ -1,4 +1,5 @@
 import getApi from '@/services/getApi'
+import VueCookie from 'vue-cookie'
 
 export default {
 	user: {
@@ -75,11 +76,11 @@ export default {
 	},
 
 	checkAuthentication() {
-		const token = document.cookie
-
-		if (token) this.user.authenticated = true
-		else this.user.authenticated = false
-
+        const token = VueCookie.get('token')
+        const isAdmin = VueCookie.get('isAdmin')
+		token ? this.user.authenticated = true : this.user.authenticated = false
+        isAdmin === 'true' ? this.user.isAdmin = true : this.user.isAdmin = false
+        console.log(this.user)
 	},
 
 	getAuthenticationHeader (context) {
@@ -88,7 +89,9 @@ export default {
 
     logout (context) {
         context.$cookie.delete('token')
+        context.$cookie.delete('isAdmin')
         this.user.authenticated = false
+        this.user.isAdmin = false
         window.location = window.location.origin
     },
 

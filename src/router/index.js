@@ -8,6 +8,7 @@ import MainPageUser from '@/components/Docker/User/MainPage'
 import Auth from '@/components/Authentication'
 import DockerServicesAdmin from '@/components/Docker/Admin/DockerServices'
 
+Auth.checkAuthentication()
 Vue.use(Router)
 
 let checks = {}
@@ -22,9 +23,7 @@ checks.preventDoubleLogin = () => (to, from, next) => {
   next({ path: '/main' }) : next()
 }
 
-const router = new Router({
-  mode: 'history',
-  routes: [
+let routes = [
     {
       path: '/',
       name: 'StartPage',
@@ -43,9 +42,9 @@ const router = new Router({
     },
     {
       path: '/main',
-      name: 'MainPageAdmin',
+      name: 'MainPage',
       component: Auth.user.isAdmin ? MainPageAdmin : MainPageUser,
-      //beforeEnter: checks.isLoggedIn()
+      beforeEnter: checks.isLoggedIn()
     },
     {
       path: '/abc',
@@ -53,6 +52,10 @@ const router = new Router({
       component: DockerServicesAdmin,
     }
   ]
+//console.log(Auth.user)
+const router = new Router({
+  mode: 'history',
+  routes
 })
 
 export default router
