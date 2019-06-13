@@ -16,11 +16,6 @@
             <span class="md-list-item-text">Сервисы</span>
           </md-list-item>
 
-          <md-list-item @click="listServices">
-            <md-icon>update</md-icon>
-            <span class="md-list-item-text">Обновить</span>
-          </md-list-item>
-
           <md-list-item @click="logout">
             <md-icon>logout</md-icon>
             <span class="md-list-item-text">Выход</span>
@@ -74,19 +69,10 @@ export default {
 
     logout () {
         Authentication.logout(this)
-    },
-
-    listServices() {
-        let token = Authentication.getAuthenticationHeader(this)
-        Docker.emptyRequest(token)
-        .then(() => {
-            return Docker.listServices(token)
-        })
-        .then((services) => {
-            this.services = services.data
-        })
     }
+
   },
+
   name: 'MainPageUser'
 }
 </script>

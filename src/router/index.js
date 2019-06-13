@@ -20,7 +20,21 @@ checks.isLoggedIn = () => (to, from, next) => {
 
 checks.preventDoubleLogin = () => (to, from, next) => {
   Auth.user.authenticated ?
-  next({ path: '/main' }) : next()
+  next({ path: '/mainpageuser' }) : next()
+}
+
+checks.isAdmin = () => (to, from, next) => {
+    if (!Auth.user.authenticated) {
+        next({ path: '/login' })
+    }
+
+    if (Auth.user.isAdmin) {
+        next()
+    } else {
+        next({ path: '/mainpageuser' })
+    }
+    
+    next(false)
 }
 
 let routes = [
@@ -41,10 +55,16 @@ let routes = [
       beforeEnter: checks.preventDoubleLogin()
     },
     {
-      path: '/main',
-      name: 'MainPage',
-      component: Auth.user.isAdmin ? MainPageAdmin : MainPageUser,
+      path: '/mainpageuser',
+      name: 'MainPageUser',
+      component: MainPageUser,
       beforeEnter: checks.isLoggedIn()
+    },
+    {
+      path: '/mainpageadmin',
+      name: 'MainPageAdmin',
+      component: MainPageAdmin,
+      beforeEnter: checks.isAdmin()
     },
     {
       path: '/abc',
@@ -52,7 +72,6 @@ let routes = [
       component: DockerServicesAdmin,
     }
   ]
-//console.log(Auth.user)
 const router = new Router({
   mode: 'history',
   routes

@@ -90,7 +90,7 @@
             password: this.form.password
           }
 
-          Authentication.authenticate(this, user, '/main')
+          Authentication.authenticate(this, user)
           
       },
       validateAuthorizeUser () {

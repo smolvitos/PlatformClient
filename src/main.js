@@ -12,7 +12,7 @@ import 'vue-material/dist/theme/default.css' // This line here
 Vue.use(VueCookie)
 Vue.use(VueMaterial)
 Vue.config.productionTip = false
-//Authentication.checkAuthentication()
+Authentication.checkAuthentication()
 
 /* eslint-disable no-new */
 new Vue({

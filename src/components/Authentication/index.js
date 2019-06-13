@@ -7,7 +7,7 @@ export default {
         isAdmin: false
 	},
 
-	authenticate(context, loginData, redirect) {
+	authenticate(context, loginData) {
 		//console.log(context.$cookie)
 		let api = getApi()
 		api.post('/login', loginData)
@@ -20,9 +20,11 @@ export default {
                 this.user.isAdmin = isAdmin
 				context.sending = true
 				setTimeout(() => {
-					if (redirect) {
-						context.$router.push(redirect)
-					}
+					if (isAdmin) {
+						context.$router.push({ path: '/mainpageadmin' })
+					} else {
+                        context.$router.push({ path: '/mainpageuser' })
+                    }
 				}, 1500)
 			})
 			.catch((errorResponse) => {
