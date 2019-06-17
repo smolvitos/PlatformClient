@@ -1,5 +1,14 @@
 <template>
-
+<div>
+   <div class="md-layout">
+         <div class="md-layout-item">
+            <md-button class="md-raised md-primary" @click="listServices">
+                Обновить
+                <md-tooltip md-direction="bottom">Обновить</md-tooltip>
+            </md-button>
+          </div>
+  </div><br />
+  <md-divider /><br />
   <div class="md-layout" id="services">
         <DockerServicesItemAdmin
           v-for="(service, index) in services"
@@ -8,7 +17,7 @@
           @listServices="listServices"
         />
   </div>
-  
+</div>
 </template>
 
 <style>

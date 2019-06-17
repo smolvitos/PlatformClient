@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-card :class="cardColor" md-theme="custom-card" md-with-hover>
+        <md-card :class="cardColor" md-with-hover> <!-- md-theme="custom-card" -->
             <md-card-header>
             <md-button :md-ripple="false" @click="showDialog = true">{{ service.serviceName }}</md-button> <!-- Поменять местами-->
             <div class="md-subhead">{{ service.baseImage }}</div>
@@ -12,16 +12,20 @@
 
             <md-card-actions>
             <md-button @click="startService" :disabled=buttonController.start> <!--$emit('start', service.baseImage, service.containerName, service.state)-->
-                <md-icon>play_arrow</md-icon>
+                <md-icon>play_arrow</md-icon> 
+                 <md-tooltip md-direction="top">Запустить сервис</md-tooltip>
             </md-button>
             <md-button @click="pauseService" :disabled=buttonController.pause> <!--//$emit('pause', service.containerName, service.state)-->
                 <md-icon>pause</md-icon>
+                 <md-tooltip md-direction="top">Поставить на паузу</md-tooltip>
             </md-button>
             <md-button @click="stopService" :disabled=buttonController.stop> <!--//$emit('stop', service.containerName, service.state)-->
                 <md-icon>stop</md-icon>
+                 <md-tooltip md-direction="top">Остановить сервис</md-tooltip>
             </md-button>
             <md-button @click="deleteService" :disabled=buttonController.delete> <!--//$emit('delete', service.baseImage, service.containerName, service.state)-->
                 <md-icon>delete</md-icon>
+                 <md-tooltip md-direction="top">Удалить сервис</md-tooltip>
             </md-button>
             </md-card-actions>
             

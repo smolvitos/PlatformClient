@@ -1,6 +1,6 @@
 <template>
     <div>
-        <md-card :class="cardColor" md-theme="custom-card" md-with-hover>
+        <md-card :class="cardColor" md-with-hover> <!-- md-theme="custom-card" -->
             <md-card-header>
             <md-button :md-ripple="false" @click="showDialog = true">Имя</md-button> <!-- Поменять местами-->
             <div class="md-subhead">{{ service.baseImage }}</div>
@@ -9,6 +9,10 @@
             <md-card-content>
             {{ service.serviceShortDescription }}
             </md-card-content>
+             <md-button class="md-fab md-mini md-primary" @click="showDialog = true">
+                  <md-tooltip md-direction="top">Информация</md-tooltip>
+                <md-icon>info</md-icon>
+            </md-button>
 
             <md-card-actions>
             </md-card-actions>
@@ -54,7 +58,7 @@
   .md-card {
       margin: 5px;
       max-width: 400px;
-      min-width: 200px;
+      min-width: 300px;
   }
   
   .md-dialog {

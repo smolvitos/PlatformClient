@@ -1,5 +1,14 @@
 <template>
-
+<div>
+  <div class="md-layout">
+         <div class="md-layout-item">
+            <md-button class="md-raised md-primary" @click="listServices">
+                Обновить
+                <md-tooltip md-direction="bottom">Обновить</md-tooltip>
+            </md-button>
+          </div>
+  </div><br />
+  <md-divider /><br />
   <div class="md-layout" id="services">
         <DockerServicesItemUser
           v-for="(service, index) in services"
@@ -7,6 +16,7 @@
           :service="service"
           @listServices="listServices"
         />
+  </div>
   </div>
   
 </template>
@@ -18,6 +28,10 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: space-around
+}
+
+#update_button {
+    width: 1000px;
 }
 </style>
 
