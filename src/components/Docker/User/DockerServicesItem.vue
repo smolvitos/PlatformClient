@@ -14,7 +14,7 @@
                 <md-icon>info</md-icon>
             </md-button>
 
-            <md-card-actions>
+            <md-card-actions> 
             </md-card-actions>
             
         </md-card>

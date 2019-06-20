@@ -24,6 +24,24 @@ export default {
 			})
 	},
 
+    updateService(context, serviceToUpdate, token) {
+        let api = getApi(token, true) // true для установки multipart/form-data
+        context.updating = true
+        api.post('/api/v1/services/update', serviceToUpdate)
+        .then((response) => {
+            let { status } = response.data
+            context.showEditDialog = false
+            context.updating = false
+            context.apiMessage = status
+			context.showMessage = true
+            context.$emit('listServices')
+        })
+        .catch((errorResponse) => {
+            context.updating = false
+            //console.log(errorResponse)
+        })
+    },
+
 	listServices(token) {
 		let api = getApi(token, false)
 		return api.get('/api/v1/services/list')
