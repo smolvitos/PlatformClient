@@ -21,6 +21,11 @@
             <span class="md-list-item-text">Импорт</span>
           </md-list-item>
 
+          <md-list-item @click="changeTab('Settings', 'Настройки')">
+            <md-icon>settings</md-icon>
+            <span class="md-list-item-text">Настройки</span>
+          </md-list-item>
+
           <md-list-item @click="logout">
             <md-icon>logout</md-icon>
             <span class="md-list-item-text">Выход</span>
@@ -56,11 +61,12 @@
 
 <script>
   import LoadImage from '@/components/Docker/Admin/LoadImage'
+  import Settings from '@/components/Docker/Admin/Settings'
   import DockerServicesAdmin from '@/components/Docker/Admin/DockerServices'
   import Authentication from '@/components/Authentication'
 export default {
   components: {
-    LoadImage, DockerServicesAdmin
+    LoadImage, DockerServicesAdmin, Settings
   },
   data: () => ({
     currentTabComponent: DockerServicesAdmin,

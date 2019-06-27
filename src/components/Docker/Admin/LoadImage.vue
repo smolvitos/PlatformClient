@@ -1,6 +1,6 @@
 <template>
 <md-tabs md-centered>
-	  <md-tab md-label="Сервис" md-icon="view_quilt">
+	  <md-tab md-label="Виртуальный сервис" md-icon="view_quilt">
 		<form class="md-layout md-alignment-center-center" id="uploadForm" name="uploadForm" enctype="multipart/form-data">
 
           <md-field :class="getValidationClass('servicename')">

@@ -32,7 +32,7 @@ export default {
 				setTimeout(() => {
 					context.sending = false
 					context.showMessage = true
-					let { message } = errorResponse.response.data
+					let { message } = errorResponse
 					context.authMessage = message
 					console.log(message)
 				}, 1500)
@@ -92,6 +92,8 @@ export default {
     logout (context) {
         context.$cookie.delete('token')
         context.$cookie.delete('isAdmin')
+        context.$cookie.delete('ip')
+        context.$cookie.delete('port')
         this.user.authenticated = false
         this.user.isAdmin = false
         window.location = window.location.origin
