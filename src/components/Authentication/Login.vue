@@ -22,12 +22,27 @@
 
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
         <md-card-actions>
+          <md-button class="md-icon-button" @click="showSettings = true">
+            <md-icon>settings</md-icon>
+          </md-button>
           <router-link to="/register"><md-button class="md-primary" :disabled="sending">Регистрация</md-button></router-link>
           &nbsp&nbsp&nbsp
           <md-button type="submit" class="md-primary md-raised" :disabled="sending">Войти</md-button>
         </md-card-actions>
 
       </md-card>
+
+      <md-dialog :md-active.sync="showSettings">
+      <md-dialog-title>Настройки</md-dialog-title>
+
+      <md-tabs md-dynamic-height>
+        <md-tab md-label="Подключение">
+          <Settings 
+            @closeSettings = "showSettings = false"
+          />
+        </md-tab>
+      </md-tabs>
+    </md-dialog>
 
       <md-snackbar :md-active.sync="showMessage" md-get-palette-color="red">{{ authMessage }}</md-snackbar>
     </form>
@@ -40,10 +55,14 @@
     required,
   } from 'vuelidate/lib/validators'
   import Authentication from '@/components/Authentication'
+  import Settings from '@/components/Docker/Settings'
 
   export default {
     name: 'Login',
-    mixins: [validationMixin],
+    mixins: [validationMixin], 
+    components: {
+        Settings
+    },
     data: () => ({
       form: {
         username: null,
@@ -55,7 +74,8 @@
       },
       showMessage: false,
       sending: false,
-      authMessage: null
+      authMessage: null,
+      showSettings: false
     }),
     validations: {
       form: {

@@ -1,16 +1,16 @@
 <template>
 <div>
     <div class="md-layout md-gutter">
-        <div class="md-layout-item md-size-30">
-            <md-field :class="getValidationClass('ipAddress')">
-                <label>IP-адрес сервера с Docker-сервисами</label>
-                <md-input v-model="ipAddress"></md-input>
-                <span class="md-error" v-if="!($v.ipAddress.required)">Укажите правильный IP-адрес</span>
+        <div class="md-layout-item md-size-80">
+            <md-field :class="getValidationClass('hostname')">
+                <label>IP-адрес сервера</label>
+                <md-input v-model="hostname"></md-input>
+                <span class="md-error" v-if="!($v.hostname.required)">Укажите правильный IP-адрес</span>
                 <span class="md-helper-text">Например, 192.168.5.101</span>
             </md-field>
         </div>
         
-        <div class="md-layout-item md-size-20">
+        <div class="md-layout-item md-size-50">
             <md-field :class="getValidationClass('port')">
                 <label>Порт</label>
                 <md-input v-model="port"></md-input>
@@ -20,16 +20,16 @@
         </div>
     </div>
     <br />
+
     <div class="md-layout md-gutter">
-        <div class="md-layout-item md-alignment-center-left md-size-20">
+        <div class="md-layout-item md-alignment-center-left md-size-15">
             <md-button class="md-raised md-accent" @click="checkSettings">Сохранить</md-button>
         </div>
     </div>
-    <md-dialog-alert
-      :md-active.sync="isSaved"
-      md-content="Параметры системы изменены"
-      md-confirm-text="Ок" 
-    />
+
+    <md-snackbar :md-duration="4000" :md-position="center" :md-active.sync="isSaved">
+      <span>Настройки изменены (Сервер: {{ `${hostname}:${port}` }})</span>
+    </md-snackbar>
 </div>
 
 </template>
@@ -45,12 +45,12 @@ export default {
   name: 'Settings',
   mixins: [validationMixin],
   data: () => ({
-    ipAddress: null,
+    hostname: null,
     port:  null,
     isSaved: false
   }),
   validations: {
-        ipAddress: {
+        hostname: {
             required
         },
         port: {
@@ -58,8 +58,8 @@ export default {
         }
   },
   beforeMount() {
-      this.ipAddress = this.$cookie.get('ip') || baseSettings.ipAddress
-      this.port = this.$cookie.get('port') || baseSettings.port
+      this.hostname = this.$cookie.get('hostname') || window.location.hostname
+      this.port = this.$cookie.get('port') || window.location.port
   },
   methods: {
     getValidationClass (fieldName) {
@@ -88,9 +88,10 @@ export default {
     },
 
     saveSettings() {
-        this.$cookie.set('ip', this.ipAddress, 1)
+        this.$cookie.set('hostname', this.hostname, 1)
         this.$cookie.set('port', this.port, 1)
         this.isSaved = true
+        this.$emit('closeSettings')
     }
   }
 }

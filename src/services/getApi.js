@@ -1,11 +1,12 @@
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
-import baseSettings from '@/services/baseSettings'
 
 export default (token, isMultipart) => {
 	var headers = {}
-    let baseIP = VueCookie.get('ip') || baseSettings.ipAddress
-    let basePort = VueCookie.get('port') || baseSettings.port
+    var baseSettings = {}
+    
+    baseSettings.hostname = VueCookie.get('hostname') || baseSettings.ipAddress
+    baseSettings.port = VueCookie.get('port') || baseSettings.port
 
 	if (isMultipart) {
 		headers['Content-type'] = 'multipart/form-data'
@@ -15,7 +16,7 @@ export default (token, isMultipart) => {
     }
     
 	return axios.create({
-		baseURL: `http://${baseIP}:${basePort}`,
+		baseURL: `http://${baseSettings.hostname}:${baseSettings.port}`,
 		headers
 	})
 }

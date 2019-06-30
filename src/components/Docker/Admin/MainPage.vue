@@ -61,7 +61,7 @@
 
 <script>
   import LoadImage from '@/components/Docker/Admin/LoadImage'
-  import Settings from '@/components/Docker/Admin/Settings'
+  import Settings from '@/components/Docker/Settings'
   import DockerServicesAdmin from '@/components/Docker/Admin/DockerServices'
   import Authentication from '@/components/Authentication'
 export default {

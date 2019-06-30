@@ -16,6 +16,11 @@
             <span class="md-list-item-text">Сервисы</span>
           </md-list-item>
 
+          <md-list-item @click="changeTab('Settings', 'Настройки')">
+            <md-icon>settings</md-icon>
+            <span class="md-list-item-text">Настройки</span>
+          </md-list-item>
+
           <md-list-item @click="logout">
             <md-icon>logout</md-icon>
             <span class="md-list-item-text">Выход</span>
@@ -51,11 +56,12 @@
 
 <script>
   import DockerServicesUser from '@/components/Docker/User/DockerServices'
+  import Settings from '@/components/Docker/Settings'
   import Authentication from '@/components/Authentication'
   import Docker from '@/components/Docker'
 export default {
   components: {
-    DockerServicesUser
+    DockerServicesUser, Settings
   },
   data: () => ({
     currentTabComponent: DockerServicesUser,

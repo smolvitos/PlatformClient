@@ -5,24 +5,44 @@
     <img src="../assets/main_logo.jpeg" width="50%" />
     <ul>
       <li>
+        <md-button class="md-icon-button" @click = "showSettings = true">
+            <md-icon>settings</md-icon>
+        </md-button>
+      </li>
+      <li>
         <router-link to="/register"><md-button class="md-dense md-primary">Зарегистрироваться</md-button></router-link>
       </li>
       <li>
         <router-link to="/login"><md-button class="md-dense md-raised md-primary">Войти</md-button></router-link>
       </li>
     </ul>
+
+    <md-dialog :md-active.sync="showSettings">
+        <md-dialog-title>Настройки</md-dialog-title>
+
+        <md-tabs md-dynamic-height>
+            <md-tab md-label="Подключение">
+            <Settings 
+                @closeSettings = "showSettings = false"
+            />
+            </md-tab>
+        </md-tabs>
+      </md-dialog>
   <Footer />
   </div>
 </template>
 
 <script>
 import Footer from '@/components/Footer'
+import Settings from '@/components/Docker/Settings'
+
 export default {
   name: 'StartPage',
-  components: { Footer },
+  components: { Footer, Settings },
   data () {
     return {
-      msg: 'Welcome to Our Vue.js Docker App!'
+      msg: 'Welcome to Our Vue.js Docker App!',
+      showSettings: false
     }
   }
 }
