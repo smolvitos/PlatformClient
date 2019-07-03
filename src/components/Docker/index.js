@@ -6,39 +6,77 @@ export default {
 	loadDockerImage(context, dockerImage, token) {
 		let api = getApi(token, true) // true для установки multipart/form-data
 		context.sending = true
-		api.post('/load', dockerImage)
+		api.post('/loaddocker', dockerImage)
 			.then((response) => {
 				console.log(response)
 				context.sending = false
 				context.clearForm()
 
 				let { message } = response.data
-				context.showResponse = true
-				context.apiMessage = message
+				context.$emit('showMessage', message)
 			})
 			.catch((errorResponse) => {
 				context.sending = false
 				let { message } = errorResponse.response.data
-				context.apiMessage = message
-				context.showResponse = true
+				context.$emit('showMessage', message)
 			})
 	},
+
+    loadVm(context, vm, token) {
+        let api = getApi(token, true) // true для установки multipart/form-data
+		context.sending = true
+		api.post('/loadvm', vm)
+			.then((response) => {
+				console.log(response)
+				context.sending = false
+				context.clearFormVm()
+
+				let { message } = response.data
+				context.$emit('showMessage', message)
+			})
+			.catch((errorResponse) => {
+				context.sending = false
+				let { message } = errorResponse.response.data
+				context.$emit('showMessage', message)
+			})
+    },
+
+    updateVm (context, vmToUpdate, token) {
+        let api = getApi(token, true) // true для установки multipart/form-data
+        context.updating = true
+        api.post('/api/v1/vms/update', vmToUpdate)
+        .then((response) => {
+            let { message } = response.data
+            context.showEditDialog = false
+            context.updating = false
+            context.$emit('listVms')
+            context.$emit('showMessage', message)
+        })
+        .catch((errorResponse) => {
+            context.updating = false
+            let { message } = errorResponse.response.data
+            context.$emit('showMessage', message)
+        })
+    },
+
+    deleteVm (token, vm) {
+        let api = getApi(token)
+        return api.post('/api/v1/vms/delete', vm)
+    },
 
     updateService(context, serviceToUpdate, token) {
         let api = getApi(token, true) // true для установки multipart/form-data
         context.updating = true
         api.post('/api/v1/services/update', serviceToUpdate)
         .then((response) => {
-            let { status } = response.data
+            let { message } = response.data
             context.showEditDialog = false
             context.updating = false
-            context.apiMessage = status
-			context.showMessage = true
             context.$emit('listServices')
+            context.$emit('showMessage', message)
         })
         .catch((errorResponse) => {
             context.updating = false
-            //console.log(errorResponse)
         })
     },
 
@@ -46,6 +84,11 @@ export default {
 		let api = getApi(token, false)
 		return api.get('/api/v1/services/list')
 	},
+
+    listVms(token) {
+        let api = getApi(token, false)
+		return api.get('/api/v1/vms/list')
+    },
 
     startService(token, service) {
         let api = getApi(token)

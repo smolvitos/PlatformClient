@@ -33,8 +33,11 @@
 
         <component
           v-bind:is="currentTabComponent"
+          @showMessage="showMessage"
         />
-      
+        <md-snackbar :md-duration="messageDuration" :md-position="messagePosition" :md-active.sync="isMessageShow">
+            <span>{{ apiMessage }}</span>
+        </md-snackbar>
       </md-app-content>
     </md-app>
   </div>
@@ -42,7 +45,7 @@
 
 <style lang="scss" scoped>
   .md-app {
-    max-height: 900px;
+    min-height: 700px;
     border: 1px solid rgba(#000, .12);
     height: 100%;
   }
@@ -65,7 +68,11 @@ export default {
   },
   data: () => ({
     currentTabComponent: DockerServicesUser,
-    currentTabTitle: 'Сервисы'
+    currentTabTitle: 'Сервисы',
+    apiMessage: null,
+    isMessageShow: false,
+    messageDuration: 4000,
+    messagePosition: 'center'
   }),
   methods: {
     changeTab (component, title) {
@@ -73,6 +80,10 @@ export default {
       this.currentTabTitle = title
     },
 
+    showMessage(message) {
+        this.apiMessage = message
+        this.isMessageShow = true
+    },
     logout () {
         Authentication.logout(this)
     }

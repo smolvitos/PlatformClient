@@ -16,7 +16,7 @@
             <span class="md-list-item-text">Сервисы</span>
           </md-list-item>
 
-          <md-list-item @click="changeTab('LoadImage', 'Загрузка образов')">
+          <md-list-item @click="changeTab('LoadService', 'Загрузка сервисов')">
             <md-icon>play_for_work</md-icon>
             <span class="md-list-item-text">Импорт</span>
           </md-list-item>
@@ -38,8 +38,11 @@
 
         <component
           v-bind:is="currentTabComponent"
+          @showMessage="showMessage"
         />
-      
+      <md-snackbar :md-duration="messageDuration" :md-position="messagePosition" :md-active.sync="isMessageShow">
+        <span>{{ apiMessage }}</span>
+      </md-snackbar>
       </md-app-content>
     </md-app>
   </div>
@@ -47,9 +50,8 @@
 
 <style lang="scss" scoped>
   .md-app {
-    max-height: 900px;
+    min-height: 700px;
     border: 1px solid rgba(#000, .12);
-    height: 100%;
   }
 
    // Demo purposes only
@@ -60,22 +62,31 @@
 </style>
 
 <script>
-  import LoadImage from '@/components/Docker/Admin/LoadImage'
+  import LoadService from '@/components/Docker/Admin/LoadService'
   import Settings from '@/components/Docker/Settings'
   import DockerServicesAdmin from '@/components/Docker/Admin/DockerServices'
   import Authentication from '@/components/Authentication'
 export default {
   components: {
-    LoadImage, DockerServicesAdmin, Settings
+    LoadService, DockerServicesAdmin, Settings
   },
   data: () => ({
     currentTabComponent: DockerServicesAdmin,
-    currentTabTitle: 'Сервисы'
+    currentTabTitle: 'Сервисы',
+    apiMessage: null,
+    isMessageShow: false,
+    messageDuration: 4000,
+    messagePosition: 'center'
   }),
   methods: {
     changeTab (component, title) {
       this.currentTabComponent = component
       this.currentTabTitle = title
+    },
+
+    showMessage(message) {
+        this.apiMessage = message
+        this.isMessageShow = true
     },
 
     logout () {

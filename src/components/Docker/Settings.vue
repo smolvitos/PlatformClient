@@ -2,7 +2,7 @@
 <div>
     <div class="md-layout md-gutter">
         <div class="md-layout-item md-size-80">
-            <md-field :class="getValidationClass('hostname')">
+            <md-field :class="getValidationClass('hostname')"> 
                 <label>IP-адрес сервера</label>
                 <md-input v-model="hostname"></md-input>
                 <span class="md-error" v-if="!($v.hostname.required)">Укажите правильный IP-адрес</span>
@@ -10,11 +10,12 @@
             </md-field>
         </div>
         
-        <div class="md-layout-item md-size-50">
+        <div class="md-layout-item md-size-60">
             <md-field :class="getValidationClass('port')">
                 <label>Порт</label>
                 <md-input v-model="port"></md-input>
                 <span class="md-error" v-if="!($v.port.required)">Укажите правильный порт</span>
+                <span class="md-error" v-if="!($v.port.between)">Укажите порт в диапазоне 80-65500</span>
                 <span class="md-helper-text">Например, 3000</span>
             </md-field>
         </div>
@@ -25,36 +26,31 @@
         <div class="md-layout-item md-alignment-center-left md-size-15">
             <md-button class="md-raised md-accent" @click="checkSettings">Сохранить</md-button>
         </div>
-    </div>
-
-    <md-snackbar :md-duration="4000" :md-position="center" :md-active.sync="isSaved">
-      <span>Настройки изменены (Сервер: {{ `${hostname}:${port}` }})</span>
-    </md-snackbar>
+    </div> 
 </div>
 
 </template>
-
 <script>
   import Docker from '@/components/Docker'
   import Authentication from '@/components/Authentication'
   import baseSettings from '@/services/baseSettings'
   import { validationMixin } from 'vuelidate'
-  import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+  import { required, minLength, maxLength, between, ipAddress} from 'vuelidate/lib/validators'
 
 export default {
   name: 'Settings',
   mixins: [validationMixin],
   data: () => ({
     hostname: null,
-    port:  null,
-    isSaved: false
+    port:  null
   }),
   validations: {
         hostname: {
-            required
+            required,
         },
         port: {
-            required
+            required,
+            between: between(80, 65500)
         }
   },
   beforeMount() {
@@ -90,8 +86,8 @@ export default {
     saveSettings() {
         this.$cookie.set('hostname', this.hostname, 1)
         this.$cookie.set('port', this.port, 1)
-        this.isSaved = true
         this.$emit('closeSettings')
+        this.$emit('showMessage', `Адрес API-сервера изменен на ${this.$cookie.get('hostname')}:${this.$cookie.get('port')}`)
     }
   }
 }

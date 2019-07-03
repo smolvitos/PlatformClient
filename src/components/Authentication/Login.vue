@@ -44,7 +44,8 @@
       </md-tabs>
     </md-dialog>
 
-      <md-snackbar :md-active.sync="showMessage" md-get-palette-color="red">{{ authMessage }}</md-snackbar>
+      <md-snackbar :md-active.sync="showMessage" md-get-palette-color="red">{{ authMessage }}</md-snackbar> 
+      
     </form>
   </div>
 </template>

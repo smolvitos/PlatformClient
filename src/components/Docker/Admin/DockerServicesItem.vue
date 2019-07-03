@@ -226,11 +226,10 @@ export default {
     updateService() {
         let serviceToUpdate = new FormData(document.getElementById('updateForm'))
         serviceToUpdate.append('_id', this.service._id)
-        //console.log(serviceToUpdate)
         Docker.updateService(this, serviceToUpdate, Authentication.getAuthenticationHeader(this))
     },
 
-    startService() { 
+    startService() {
         let baseImage = this.service.baseImage
         let containerName = this.service.containerName
         let state = this.service.state  
@@ -243,10 +242,9 @@ export default {
         Docker.startService(Authentication.getAuthenticationHeader(this), serviceItem)
         .then((response) => {
             console.log(response.data)
-            this.apiMessage = response.data.status
-            this.showMessage = true
             this.changing = false
             this.$emit('listServices')
+            this.$emit('showMessage', response.data.message)
         })
         .catch((errorResponse) => {
             this.changing = false
@@ -263,10 +261,9 @@ export default {
         Docker.pauseService(Authentication.getAuthenticationHeader(this), service)
         .then((response) => {
             console.log(response.data)
-            this.apiMessage = response.data.status
-            this.showMessage = true
             this.changing = false
             this.$emit('listServices')
+            this.$emit('showMessage', response.data.message)
         })
         .catch((errorResponse) => {
             this.changing = false
@@ -283,10 +280,9 @@ export default {
         Docker.stopService(Authentication.getAuthenticationHeader(this), service)
         .then((response) => {
             console.log(response.data)
-            this.apiMessage = response.data.status
-            this.showMessage = true
             this.changing = false
             this.$emit('listServices')
+            this.$emit('showMessage', response.data.message)
         })
         .catch((errorResponse) => {
             this.changing = false
@@ -304,10 +300,9 @@ export default {
         Docker.deleteService(Authentication.getAuthenticationHeader(this), service)
         .then((response) => {
             console.log(response.data)
-            this.apiMessage = response.data.status
-            this.showMessage = true
             this.changing = false
             this.$emit('listServices')
+            this.$emit('showMessage', response.data.message)
         })
         .catch((errorResponse) => {
             this.changing = false
