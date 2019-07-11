@@ -10,7 +10,7 @@ export default {
 			.then((response) => {
 				console.log(response)
 				context.sending = false
-				context.clearForm()
+				context.clearFormDocker()
 
 				let { message } = response.data
 				context.$emit('showMessage', message)

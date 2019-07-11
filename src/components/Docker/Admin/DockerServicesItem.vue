@@ -189,7 +189,7 @@ export default {
     }
   },
 
-  beforeMount() {
+  beforeUpdate() {
     this.form.servicename = this.service.serviceName
     this.form.description = this.service.serviceDescription
     this.form.shortdescription = this.service.serviceShortDescription

@@ -177,7 +177,7 @@ export default {
       }
   },
 
-  beforeMount() {
+  beforeUpdate() {
     this.formVm.vmName = this.vm.vmName
     this.formVm.vmDescription = this.vm.vmDescription
     this.formVm.vmShortDescription = this.vm.vmShortDescription
@@ -204,6 +204,7 @@ export default {
         this.formVm.vmShortDescription = null
         this.formVm.vmIpHost = null
         this.formVm.vmPorts = []
+        this.formVm.trueAnswers = []
     },
 
     checkUpdateForm () {
@@ -217,6 +218,8 @@ export default {
     updateVm() {
         let vmToUpdate = new FormData(document.getElementById('updateFormVm'))
         vmToUpdate.append('_id', this.vm._id)
+        vmToUpdate.append('vmPorts', this.formVm.vmPorts)
+        vmToUpdate.append('trueAnswers', this.formVm.trueAnswers)
         Docker.updateVm(this, vmToUpdate, Authentication.getAuthenticationHeader(this))
     },
 
