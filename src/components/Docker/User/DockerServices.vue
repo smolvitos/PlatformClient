@@ -22,7 +22,7 @@
         </div>
         </div>
     </md-tab>
-    <md-tab md-label="Виртуальные сервисы" md-icon="computer">
+    <md-tab md-label="Виртуальные машины" md-icon="computer">
         <div>
             <div class="md-layout">
                     <div class="md-layout-item">

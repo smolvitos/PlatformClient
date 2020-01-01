@@ -67,10 +67,11 @@ let routes = [
       beforeEnter: checks.isAdmin()
     },
     {
-      path: '/abc',
-      name: 'DockerServicesAdmin',
-      component: DockerServicesAdmin,
-    }
+      path: '*',
+      name: 'StartPage',
+      component: StartPage,
+    },
+
   ]
 const router = new Router({
   mode: 'history',

@@ -57,7 +57,6 @@
   } from 'vuelidate/lib/validators'
   import Authentication from '@/components/Authentication'
   import Settings from '@/components/Docker/Settings'
-
   export default {
     name: 'Login',
     mixins: [validationMixin], 
@@ -91,7 +90,6 @@
     methods: {
       getValidationClass (fieldName) {
         const field = this.$v.form[fieldName]
-
         if (field) {
           return {
             'md-invalid': field.$invalid && field.$dirty
@@ -105,18 +103,15 @@
         this.authMessage = null
       },
       authorizeUser () {
-
           let user = {
             username: this.form.username,
             password: this.form.password
           }
-
           Authentication.authenticate(this, user)
           
       },
       validateAuthorizeUser () {
         this.$v.$touch()
-
         if (!this.$v.$invalid) {
           this.authorizeUser()
         }

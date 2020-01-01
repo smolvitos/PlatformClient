@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-position" style="position: relative;">
         <md-card :class="cardColor" md-with-hover> <!-- md-theme="custom-card" -->
             <md-card-header>
             <div class="md-layout md-gutter">
@@ -41,7 +41,7 @@
             
         </md-card>
 
-        <md-progress-bar md-mode="indeterminate" v-show="changing" />
+        <md-progress-bar md-mode="indeterminate" class="progress-bar" v-show="changing" />
 
         <md-dialog :md-active.sync="showServiceDialog">
             <md-dialog-title>{{ service.serviceName }} (основан на {{ service.baseImage }})</md-dialog-title>
@@ -83,7 +83,7 @@
                 </form>
             </md-dialog-content>
 
-            <md-progress-bar md-mode="indeterminate" v-show="updating" />
+            <md-progress-bar md-mode="indeterminate" v-show="changing" />
 
             <md-dialog-actions>
                 <md-button class="md-raised md-primary" @click="checkUpdateForm" :disabled="updating">Сохранить</md-button>
@@ -123,7 +123,14 @@
 
   span {
       display: block;
-    }
+  }
+  .progress-bar {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+
 </style>
 
 <script>
@@ -174,6 +181,7 @@ export default {
 
   computed: {
     cardColor: function () {
+        
         return (!this.service.containerName && !this.service.state) ? '' :
             (this.service.containerName && this.service.state != 'running') ? 'md-accent' :
             (this.service.containerName && this.service.state == 'running') ? 'md-primary' :
@@ -189,7 +197,7 @@ export default {
     }
   },
 
-  beforeUpdate() {
+  beforeMount() {
     this.form.servicename = this.service.serviceName
     this.form.description = this.service.serviceDescription
     this.form.shortdescription = this.service.serviceShortDescription
@@ -219,6 +227,7 @@ export default {
       this.$v.$touch()
 
       if (!this.$v.$invalid) {
+        this.$v.$reset()
         this.updateService()
       }
     },

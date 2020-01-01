@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-position" style="position: relative;">
         <md-card md-with-hover> <!-- md-theme="custom-card" -->
             <md-card-header>
             <div class="md-layout md-gutter">
@@ -29,7 +29,7 @@
             
         </md-card>
 
-        <md-progress-bar md-mode="indeterminate" v-show="changing" />
+        <md-progress-bar md-mode="indeterminate" v-show="changing" class="progress-bar" />
 
         <md-dialog :md-active.sync="showServiceDialog">
             <md-dialog-title>{{ vm.vmName }}</md-dialog-title>
@@ -124,6 +124,13 @@
   span {
       display: block;
     }
+
+  .progress-bar {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
 </style>
 
 <script>

@@ -85,6 +85,53 @@ export default {
 		return api.get('/api/v1/services/list')
 	},
 
+    listUsers(token) {
+		let api = getApi(token, false)
+		return api.get('/api/v1/users/list')
+	},
+    deleteUser(token, user) {
+        let api = getApi(token, false)
+		return api.post('/api/v1/users/delete', user)
+    },
+    editUser (context, userToEdit, token) {
+        let api = getApi(token, true) // true для установки multipart/form-data
+        context.updating = true
+        api.post('/api/v1/users/edit', userToEdit)
+        .then((response) => {
+            let { message } = response.data
+            context.showEditDialog = false
+            context.updating = false
+            context.$emit('listUsers')
+            context.$emit('showMessage', message)
+        })
+        .catch((errorResponse) => {
+            context.updating = false
+            let { message } = errorResponse.response.data
+            context.$emit('showMessage', message)
+        })
+    },
+
+    getUserInfo(token) { //в данном случае нужен только токен, по нему определится username, подменить его нельзя
+        let api = getApi(token, false)
+		return api.get('/api/v1/users/getuserinfo')
+    },
+
+    sendFlag(context, flagToCheck, token) {
+        let api = getApi(token, false) // true для установки multipart/form-data
+        context.updating = true
+        api.post('/api/v1/users/checkflag', flagToCheck)
+        .then((response) => {
+            let { message } = response.data
+            context.updating = false
+            context.$emit('showMessage', message)
+        })
+        .catch((errorResponse) => {
+            context.updating = false
+            let { message } = errorResponse.response.data
+            context.$emit('showMessage', message)
+        })
+    },
+
     listVms(token) {
         let api = getApi(token, false)
 		return api.get('/api/v1/vms/list')

@@ -21,6 +21,11 @@
             <span class="md-list-item-text">Импорт</span>
           </md-list-item>
 
+          <md-list-item @click="changeTab('ListOfUsers', 'Пользователи')">
+            <md-icon>account_box</md-icon>
+            <span class="md-list-item-text">Пользователи</span>
+          </md-list-item>
+
           <md-list-item @click="changeTab('Settings', 'Настройки')">
             <md-icon>settings</md-icon>
             <span class="md-list-item-text">Настройки</span>
@@ -50,7 +55,7 @@
 
 <style lang="scss" scoped>
   .md-app {
-    min-height: 700px;
+    min-height: 100vh;
     border: 1px solid rgba(#000, .12);
   }
 
@@ -63,12 +68,13 @@
 
 <script>
   import LoadService from '@/components/Docker/Admin/LoadService'
+  import ListOfUsers from '@/components/Docker/Admin/ListOfUsers'
   import Settings from '@/components/Docker/Settings'
   import DockerServicesAdmin from '@/components/Docker/Admin/DockerServices'
   import Authentication from '@/components/Authentication'
 export default {
   components: {
-    LoadService, DockerServicesAdmin, Settings
+    LoadService, DockerServicesAdmin, Settings, ListOfUsers
   },
   data: () => ({
     currentTabComponent: DockerServicesAdmin,

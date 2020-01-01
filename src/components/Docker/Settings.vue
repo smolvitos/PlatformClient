@@ -23,7 +23,7 @@
     <br />
 
     <div class="md-layout md-gutter">
-        <div class="md-layout-item md-alignment-center-left md-size-15">
+        <div class="md-layout-item md-alignment-center-left md-size-5">
             <md-button class="md-raised md-accent" @click="checkSettings">Сохранить</md-button>
         </div>
     </div> 
@@ -69,10 +69,8 @@ export default {
     },
     clearForm () {
         this.$v.$reset()
-        this.form.servicename = null
-        this.form.description = null
-        this.form.shortdescription = null
-        this.imagefile = null
+        this.hostname = null
+        this.port = null
     },
 
     checkSettings () {

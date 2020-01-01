@@ -11,9 +11,19 @@
         </md-toolbar>
 
         <md-list>
+            <md-list-item @click="changeTab('UserProfile', 'Профиль пользователя')">
+            <md-icon>account_box</md-icon>
+            <span class="md-list-item-text">Профиль</span>
+          </md-list-item>
+
           <md-list-item @click="changeTab('DockerServicesUser', 'Сервисы')">
             <md-icon>dashboard</md-icon>
             <span class="md-list-item-text">Сервисы</span>
+          </md-list-item>
+
+          <md-list-item @click="changeTab('FlagChecker', 'Проверка флагов')">
+            <md-icon>flag</md-icon>
+            <span class="md-list-item-text">Проверка флагов</span>
           </md-list-item>
 
           <md-list-item @click="changeTab('Settings', 'Настройки')">
@@ -45,7 +55,7 @@
 
 <style lang="scss" scoped>
   .md-app {
-    min-height: 700px;
+    min-height: 100vh;
     border: 1px solid rgba(#000, .12);
     height: 100%;
   }
@@ -59,12 +69,14 @@
 
 <script>
   import DockerServicesUser from '@/components/Docker/User/DockerServices'
+  import FlagChecker from '@/components/Docker/User/FlagChecker'
+  import UserProfile from '@/components/Docker/User/UserProfile'
   import Settings from '@/components/Docker/Settings'
   import Authentication from '@/components/Authentication'
   import Docker from '@/components/Docker'
 export default {
   components: {
-    DockerServicesUser, Settings
+    DockerServicesUser, Settings, FlagChecker, UserProfile
   },
   data: () => ({
     currentTabComponent: DockerServicesUser,
@@ -75,6 +87,7 @@ export default {
     messagePosition: 'center'
   }),
   methods: {
+    
     changeTab (component, title) {
       this.currentTabComponent = component
       this.currentTabTitle = title
@@ -84,6 +97,7 @@ export default {
         this.apiMessage = message
         this.isMessageShow = true
     },
+
     logout () {
         Authentication.logout(this)
     }
