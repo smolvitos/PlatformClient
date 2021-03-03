@@ -19,7 +19,7 @@
     "material-icons": "^0.3.0",
     "materialize": "^1.0.0",
     "materialize-css": "^1.0.0-rc.2",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "sass": "^1.17.4",
     "vue": "^2.5.2",
     "vue-cookie": "^1.1.4",
